@@ -1,1 +1,47 @@
-/*# sourceMappingURL=style.css.map */
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@500&display=swap");
+*, *::before, *::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-family: "Lexend Mega", sans-serif;
+  width: 100%;
+  height: 200vh;
+}
+
+.navigation {
+  background: #588157;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.search-btn {
+  transform: scaleX(1);
+  border-radius: 5px;
+  border: 1px solid grey;
+  padding: 3px;
+}
+
+.search-btn:focus {
+  border: none;
+  outline: none;
+}
+
+.container__randRecipe {
+  background: #d6ccc2;
+}/*# sourceMappingURL=style.css.map */
