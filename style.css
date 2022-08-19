@@ -29,6 +29,8 @@ body {
   font-size: 1.5rem;
 }
 .navigation__search {
+  display: flex;
+  justify-content: flex-start;
   background-color: #fff;
   width: 30px;
   height: 30px;
@@ -69,7 +71,7 @@ body {
 }
 
 .navigation__search--active {
-  transform: scaleX(10);
+  width: 250px;
 }
 
 .navigation__search--input {
