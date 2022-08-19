@@ -13,5 +13,5 @@ async function getMealByName(){
 async function getMealById(){
     const request = await fetch("www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata");
     const responseRandomMeal = await request.json();
-    console.log(responseRandomMeal)
+    console.log(responseRandomMeal);
 }
