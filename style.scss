@@ -72,8 +72,12 @@ body{
 .navigation__search--active{
     width: 250px;
 }
+.navigation__search--active .navigation__search--input{
+    display: flex;
+}
 
 .navigation__search--input{
+    display: none;
     transform: scaleX(1);
     width: auto;
     border-radius: 5px;
