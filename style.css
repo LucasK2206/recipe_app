@@ -21,6 +21,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   background: #588157;
   position: fixed;
   top: 0;
@@ -45,6 +46,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   position: relative;
   top: 0;
   left: 0;
@@ -94,21 +96,29 @@ body {
   outline: none;
 }
 
-.container {
+.main {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   margin-top: 60px;
+}
+
+.containerRand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   width: 100%;
 }
-.container__randRecipe {
+.containerRand__randRecipe {
   background: #fff;
   width: 270px;
   padding: 7px;
   box-shadow: 0 0 10px rgb(180, 180, 180);
   position: relative;
 }
-.container__randRecipe--name {
+.containerRand__randRecipe--name {
   font-size: 1.25rem;
   color: #fff;
   position: absolute;
@@ -119,7 +129,7 @@ body {
   background: #588157;
   z-index: 1;
 }
-.container__randRecipe--img, .container__randRecipe--img img {
+.containerRand__randRecipe--img, .containerRand__randRecipe--img img {
   -o-object-fit: cover;
      object-fit: cover;
   width: 100%;
