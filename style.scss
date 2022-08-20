@@ -8,6 +8,8 @@ html{
 }
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@500&display=swap');
 
+$color_white: #fff;
+
 @mixin flex-display {
     display: flex;
     align-items: center;
@@ -18,6 +20,8 @@ body{
     font-family: 'Lexend Mega', sans-serif;
     width: 100%;
     height: 200vh;
+    color: #000;
+    background: rgb(245, 245, 245);
 }
 .navigation{
     @include flex-display;
@@ -30,13 +34,15 @@ body{
     font-weight: bold;
     font-size: 1.5rem;
     &__search{
+        overflow: hidden;
         display: flex;
         justify-content: flex-start;
-        background-color: #fff;
+        background-color: $color_white;
         width: 30px;
         height: 30px;
         border-radius: 50px;
         box-shadow: 0 0 10px 3px#345f33;
+        transition: .3s ease-in-out;
         &--icon{
             @include flex-display;
             position: relative;
@@ -70,26 +76,48 @@ body{
     }
 }
 .navigation__search--active{
+    transition: .3s ease-in-out;
     width: 250px;
-}
-.navigation__search--active .navigation__search--input{
-    display: flex;
 }
 
 .navigation__search--input{
-    display: none;
-    transform: scaleX(1);
     width: auto;
     border-radius: 5px;
     border: none;
     outline: none;
     padding: 3px;
+    width: 100%;
+    padding: 10px;
 }
 .navigation__search--input:focus{
     border: none;
     outline: none;
 }
-
-.container__randRecipe{
-    background: #d6ccc2;
+.container{
+    @include flex-display;
+    margin-top: 60px;
+    width: 100%;
+    &__randRecipe{
+       background: $color_white;
+        width: 270px;
+        padding: 7px;
+        box-shadow: 0 0 10px rgb(180, 180, 180);
+        position: relative;
+        &--name{
+            font-size: 1.25rem;
+            color: $color_white;
+            position: absolute;
+            left: 15;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 5px;
+            background:#588157;
+            z-index: 1;
+        }
+        &--img, &--img img{
+            object-fit: cover;
+            width: 100%;
+            height: 200px;
+        }
+    }
 }

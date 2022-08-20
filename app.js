@@ -1,4 +1,5 @@
 const getMagnifierIcon = document.querySelector(".navigation__search--icon");
+const nav = document.querySelector(".navigation__search");
 
 document.addEventListener("DOMContentLoaded", () => {
     addEventListeners();
@@ -7,23 +8,35 @@ const addEventListeners = function(){
     getMagnifierIcon.addEventListener("click", handleMagnifierClick)
 }
 const handleMagnifierClick = function() {
-    console.log(this)
+    nav.classList.toggle("navigation__search--active")
 }
 
-async function getRandomMeal(){
+const getRandomMeal = async function(){
     const request = await fetch(`https://www.themealdb.com/api/json/v1/1/random.php`);
     const responseRandomMeal = await request.json();
-    console.log(responseRandomMeal);
+    const randomMealItem = await responseRandomMeal.meals[0];
+    return randomMealItem;
 }
 getRandomMeal();
 
-async function getMealByName(){
-    const request = await fetch("www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata");
-    const responseRandomMeal = await request.json();
-    console.log(responseRandomMeal)
+const getMealByName = async function(){
+    const request = await fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata");
+    const responseMealByName = await request.json();
+    const mealByNameItem = await responseMealByName.meals;
+    return mealByNameItem;
 }
-async function getMealById(){
-    const request = await fetch("www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata");
-    const responseRandomMeal = await request.json();
-    console.log(responseRandomMeal);
+const getMealById = async function(){
+    const request = await fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata");
+    const responseMealById = await request.json();
+    const mealByIdItem = await responseMealById.meals;
+    return mealByIdItem;
+
 }
+
+const startAsyncFunc = async function(){
+    const randomMeal = await getRandomMeal();
+    const mealByName = await getMealByName();
+    const mealById = await getMealById();
+    console.log(randomMeal, mealByName, mealById);
+}
+startAsyncFunc();
