@@ -1,5 +1,6 @@
 const getMagnifierIcon = document.querySelector(".navigation__search--icon");
 const nav = document.querySelector(".navigation__search");
+const container = document.querySelector(".container");
 
 document.addEventListener("DOMContentLoaded", () => {
     addEventListeners();
@@ -34,9 +35,24 @@ const getMealById = async function(){
 }
 
 const startAsyncFunc = async function(){
+
     const randomMeal = await getRandomMeal();
     const mealByName = await getMealByName();
     const mealById = await getMealById();
-    console.log(randomMeal, mealByName, mealById);
+    addRandomDivToHtml(randomMeal);
+}
+const addRandomDivToHtml = function(randomMeal){
+    const randomMealObj = {strMeal, strMealThumb} = randomMeal;
+    console.log(strMeal, strMealThumb);
+    const randomMealSection = document.createElement("section");
+    randomMealSection.classList.add("container__randRecipe");
+    randomMealSection.innerHTML = `
+        <h1 class="container__randRecipe--name">${strMeal}</h1>
+
+        <div class="container__randRecipe--img">
+            <img src="${strMealThumb}" alt="">
+        </div>
+    `;
+    container.append(randomMealSection);
 }
 startAsyncFunc();
