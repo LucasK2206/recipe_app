@@ -99,10 +99,22 @@ body{
     margin-top: 60px;
 }
 .containerRand{
+    width: 100%;
+    @include flex-display;
+    flex-direction: column;
+    &__title{
+        padding: 5px 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #588157;
+        text-shadow: 1px 1px rgb(170, 170, 170);
+    }
+}
+.container{
     @include flex-display;
     flex-direction: column;
     width: 100%;
-    &__randRecipe{
+    &__recipe{
        background: $color_white;
         width: 270px;
         padding: 7px;
@@ -126,19 +138,19 @@ body{
         }
     }
 }
-.btnBox{
+.buttons{
     padding: 10px 0;
     margin-top: 3px;
     background:#588157;
     @include flex-display;
     width: 100%;
     justify-content: space-around;
-    &__favBtn{
+    &__fav{
         border: none;
         cursor: pointer;
         padding: 10px;
     }
-    &__showRecipe{
+    &__show{
         width: 15px;
         height: 15px;;
         padding: 10px;
