@@ -41,18 +41,26 @@ const startAsyncFunc = async function(){
     const mealById = await getMealById();
     addRandomDivToHtml(randomMeal);
 }
-const addRandomDivToHtml = function(randomMeal){
-    const randomMealObj = {strMeal, strMealThumb} = randomMeal;
-    console.log(strMeal, strMealThumb);
-    const randomMealSection = document.createElement("section");
-    randomMealSection.classList.add("containerRand__randRecipe");
-    randomMealSection.innerHTML = `
-        <h1 class="containerRand__randRecipe--name">${strMeal}</h1>
+const createArticleComponent = function(strMeal, strMealThumb){
+    return `
+                <h1 class="containerRand__randRecipe--name">${strMeal}</h1>
 
-        <div class="containerRand__randRecipe--img">
-            <img src="${strMealThumb}" alt="">
-        </div>
-    `;
+                <div class="containerRand__randRecipe--img">
+                    <img src="${strMealThumb}" alt="">
+                </div>
+
+                <div class="btnBox">
+                    <button class="btnBox__favBtn">Add to fav</button>
+                    <button class="btnBox__showRecipe"></button>
+                </div>
+            `
+}
+const addRandomDivToHtml = function(randomMeal){
+    const {strMeal, strMealThumb} = randomMeal;
+    console.log(strMeal, strMealThumb);
+    const randomMealSection = document.createElement("article");
+    randomMealSection.classList.add("containerRand__randRecipe");
+    randomMealSection.innerHTML = createArticleComponent(strMeal, strMealThumb);
     containerRandomRecipe.append(randomMealSection);
 }
 startAsyncFunc();

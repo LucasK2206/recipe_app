@@ -21,7 +21,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   background: #588157;
   position: fixed;
   top: 0;
@@ -30,6 +29,7 @@ body {
   padding: 10px;
   font-weight: bold;
   font-size: 1.5rem;
+  z-index: 3;
 }
 .navigation__search {
   overflow: hidden;
@@ -46,7 +46,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   position: relative;
   top: 0;
   left: 0;
@@ -100,7 +99,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   margin-top: 60px;
 }
 
@@ -134,4 +132,51 @@ body {
      object-fit: cover;
   width: 100%;
   height: 200px;
+}
+
+.btnBox {
+  padding: 10px 0;
+  margin-top: 3px;
+  background: #588157;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  justify-content: space-around;
+}
+.btnBox__favBtn {
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+.btnBox__showRecipe {
+  width: 15px;
+  height: 15px;
+  padding: 10px;
+  position: relative;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.btnBox__showRecipe::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+  width: 14px;
+  height: 5px;
+  transform: rotate(45deg);
+  left: 0;
+  top: 3;
+  pointer-events: none;
+}
+.btnBox__showRecipe::before {
+  position: absolute;
+  right: 0;
+  top: 3;
+  content: "";
+  background: #fff;
+  width: 14px;
+  height: 5px;
+  transform: rotate(-45deg);
+  pointer-events: none;
 }/*# sourceMappingURL=style.css.map */
