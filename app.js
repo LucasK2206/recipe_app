@@ -2,7 +2,7 @@ const getMagnifierIcon = document.querySelector(".navigation__search--icon");
 const nav = document.querySelector(".navigation__search");
 const containerRandomRecipe = document.querySelector(".containerRand");
 const searchBox = document.querySelector(".navigation__search--input");
-const searchSection = document.querySelector(".searchSection");
+const searchSection = document.querySelector(".containerSearch");
 
 document.addEventListener("DOMContentLoaded", () => {
     addEventListeners();
@@ -24,12 +24,14 @@ const getRandomMeal = async function(){
 getRandomMeal();
 
 const getMealByName = async function(mealName){
+    searchSection.innerHTML = "";
     const request = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=%${mealName}%`);
     const responseMealByName = await request.json();
     const mealByNameItem = await responseMealByName.meals;
-    console.log(mealByNameItem);
     for (const key of mealByNameItem){
-        console.log(key)
+        console.log(key);
+        const {strMeal, strMealThumb} = key
+        addSearchDivToHtml(strMeal, strMealThumb);
     }
     return mealByNameItem;
 }
@@ -45,11 +47,15 @@ const startAsyncFunc = async function(){
 
     const randomMeal = await getRandomMeal();
     const mealById = await getMealById();
-    addRandomDivToHtml(randomMeal);
+    const {strMeal, strMealThumb} = randomMeal;
+    addRandomDivToHtml(strMeal, strMealThumb);
 }
 startAsyncFunc();
-const createArticleComponent = function(strMeal, strMealThumb){
-    return `
+const createArticleComponent = function(strMeal, strMealThumb, sectionName){
+    const randomMealSection = document.createElement("article");
+    randomMealSection.classList.add("container__recipe");
+
+    randomMealSection.innerHTML =  `
                 <h1 class="container__recipe--name">${strMeal}</h1>
 
                 <div class="container__recipe--img">
@@ -61,14 +67,13 @@ const createArticleComponent = function(strMeal, strMealThumb){
                     <button class="buttons__show"></button>
                 </div>
             `
+    sectionName.append(randomMealSection);
 }
-const addRandomDivToHtml = function(randomMeal){
-    const {strMeal, strMealThumb} = randomMeal;
-    console.log(strMeal, strMealThumb);
-    const randomMealSection = document.createElement("article");
-    randomMealSection.classList.add("container__recipe");
-    randomMealSection.innerHTML = createArticleComponent(strMeal, strMealThumb);
-    containerRandomRecipe.append(randomMealSection);
+const addRandomDivToHtml = function(strMeal, strMealThumb){
+    createArticleComponent(strMeal, strMealThumb, containerRandomRecipe);
+}
+const addSearchDivToHtml = function (strMeal, strMealThumb){
+    createArticleComponent(strMeal, strMealThumb, searchSection)
 }
 const searchLetterWrote = function(){
     setTimeout(() => {

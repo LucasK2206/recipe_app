@@ -100,16 +100,17 @@ body {
   align-items: center;
   justify-content: center;
   margin-top: 60px;
+  flex-direction: column;
 }
 
-.containerRand {
+.containerRand, .containerSearch {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
-.containerRand__title {
+.containerRand__title, .containerSearch__title {
   padding: 5px 10px;
   font-weight: bold;
   text-transform: uppercase;
