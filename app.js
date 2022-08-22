@@ -2,6 +2,7 @@ const getMagnifierIcon = document.querySelector(".navigation__search--icon");
 const nav = document.querySelector(".navigation__search");
 const containerRandomRecipe = document.querySelector(".containerRand");
 const searchBox = document.querySelector(".navigation__search--input");
+const searchSection = document.querySelector(".searchSection");
 
 document.addEventListener("DOMContentLoaded", () => {
     addEventListeners();
@@ -26,7 +27,10 @@ const getMealByName = async function(mealName){
     const request = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=%${mealName}%`);
     const responseMealByName = await request.json();
     const mealByNameItem = await responseMealByName.meals;
-    console.log(mealByNameItem)
+    console.log(mealByNameItem);
+    for (const key of mealByNameItem){
+        console.log(key)
+    }
     return mealByNameItem;
 }
 const getMealById = async function(){
@@ -40,7 +44,6 @@ const getMealById = async function(){
 const startAsyncFunc = async function(){
 
     const randomMeal = await getRandomMeal();
-    const mealByName = await getMealByName();
     const mealById = await getMealById();
     addRandomDivToHtml(randomMeal);
 }
@@ -70,6 +73,9 @@ const addRandomDivToHtml = function(randomMeal){
 const searchLetterWrote = function(){
     setTimeout(() => {
         const name = searchBox.value;
-        getMealByName(name)
+        console.log(name.length)
+        if(name !== " " && name !== "" && name.length >= 2){
+            getMealByName(name);
+        }
     }, 300);
 }

@@ -122,9 +122,10 @@ body{
         position: relative;
         &--name{
             font-size: 1.25rem;
+            max-width: 256px;
             color: $color_white;
             position: absolute;
-            left: 15;
+            padding: inherit;
             top: 50%;
             transform: translateY(-50%);
             padding: 5px;
