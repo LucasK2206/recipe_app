@@ -10,6 +10,16 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 const addEventListeners = function(){
     getMagnifierIcon.addEventListener("click", handleMagnifierClick);
+    searchBox.addEventListener("focus", () => {
+        setTimeout(() => {
+            ulList.classList.toggle("navigation__list--disabled");
+        }, 600);
+    })
+    searchBox.addEventListener("blur", () => {
+        setTimeout(() => {
+            ulList.classList.toggle("navigation__list--disabled");
+        }, 600);
+    })
     searchBox.addEventListener("input", searchLetterWrote)
 }
 const handleMagnifierClick = function() {
@@ -25,7 +35,7 @@ const getRandomMeal = async function(){
 getRandomMeal();
 
 const getMealByName = async function(mealName){
-    searchSection.innerHTML = "";
+    searchBox.innerHTML = "";
     ulList.innerHTML = "";
     const request = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=%${mealName}%`);
     const responseMealByName = await request.json();
@@ -33,7 +43,7 @@ const getMealByName = async function(mealName){
     for (const key of mealByNameItem){
         console.log(key);
         const {strMeal, strMealThumb} = key
-        addSearchBlockToHtml(strMeal, strMealThumb);
+        addSearchListToHtml(strMeal, strMealThumb);
     }
     return mealByNameItem;
 }
@@ -74,24 +84,26 @@ const createArticleComponent = function(strMeal, strMealThumb, sectionName){
 const addBlockToHtml = function(strMeal, strMealThumb){
     createArticleComponent(strMeal, strMealThumb, containerRandomRecipe);
 }
-const addSearchBlockToHtml = function (strMeal, strMealThumb){
-   // createArticleComponent(strMeal, strMealThumb, searchSection)
-   addSearchListToHtml(strMeal, strMealThumb)
-}
+
 const addSearchListToHtml = function(strMeal, strMealThumb){
 
     const listItemElement = document.createElement("li");
+    listItemElement.addEventListener("click", box => {
+        console.log(box)
+        //createArticleComponent(searchBox)
+    })
     listItemElement.classList.add("navigation__list--item");
     listItemElement.innerHTML = `
-        szukasz: ${strMeal}
+        ${strMeal}
     `
     ulList.append(listItemElement);
+
 }
 
 const searchLetterWrote = function(){
     setTimeout(() => {
         const name = searchBox.value;
-        console.log(name.length)
+        console.log(name)
         if(name !== " " && name !== "" && name.length >= 2){
             getMealByName(name);
         } else if (name === " " || name === "" || name.length < 2){

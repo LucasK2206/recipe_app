@@ -53,6 +53,7 @@ body {
   height: 30px;
   cursor: pointer;
   padding: 10px;
+  padding: 0 3px;
 }
 .navigation__search--icon::before {
   content: "";
@@ -94,7 +95,11 @@ body {
   background: #4a724a;
 }
 
-.navigation-disabled {
+.navigation__list--item:nth-child(5) .navigation__list {
+  color: blue;
+}
+
+.navigation__list--disabled {
   display: none;
 }
 
@@ -103,7 +108,13 @@ body {
   width: 250px;
 }
 
+.navigation__search--active .navigation__search--input {
+  pointer-events: auto;
+  display: block;
+}
+
 .navigation__search--input {
+  display: none;
   width: auto;
   border-radius: 5px;
   border: none;

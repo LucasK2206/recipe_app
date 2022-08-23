@@ -53,6 +53,7 @@ body{
             height: 30px;
             cursor: pointer;
             padding: 10px;
+            padding: 0 3px;
             &::before{
                 content: "";
                 position: absolute;
@@ -95,15 +96,22 @@ body{
         }
     }
 }
-.navigation-disabled{
+.navigation__list--item:nth-child(5) .navigation__list{
+    color: blue;
+  }
+.navigation__list--disabled{
     display: none;
 }
 .navigation__search--active{
     transition: .3s ease-in-out;
     width: 250px;
 }
-
+.navigation__search--active .navigation__search--input{
+    pointer-events: auto;
+    display: block;
+}
 .navigation__search--input{
+    display: none;
     width: auto;
     border-radius: 5px;
     border: none;
