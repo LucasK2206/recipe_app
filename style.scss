@@ -75,6 +75,28 @@ body{
             }
         }
     }
+    &__list{
+        width: 220px;
+        list-style-type: none;
+        position: fixed;
+        top: 42px;
+        background: #406b40;
+        color: $color_white;
+        &--item{
+            margin: 1px 0;
+            padding: 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            width: 100%;
+            background-color: #588157;
+            &:hover{
+                background: #4a724a;
+            }
+        }
+    }
+}
+.navigation-disabled{
+    display: none;
 }
 .navigation__search--active{
     transition: .3s ease-in-out;

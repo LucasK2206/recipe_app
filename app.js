@@ -3,6 +3,7 @@ const nav = document.querySelector(".navigation__search");
 const containerRandomRecipe = document.querySelector(".containerRand");
 const searchBox = document.querySelector(".navigation__search--input");
 const searchSection = document.querySelector(".containerSearch");
+const ulList = document.querySelector(".navigation__list");
 
 document.addEventListener("DOMContentLoaded", () => {
     addEventListeners();
@@ -25,13 +26,14 @@ getRandomMeal();
 
 const getMealByName = async function(mealName){
     searchSection.innerHTML = "";
+    ulList.innerHTML = "";
     const request = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=%${mealName}%`);
     const responseMealByName = await request.json();
     const mealByNameItem = await responseMealByName.meals;
     for (const key of mealByNameItem){
         console.log(key);
         const {strMeal, strMealThumb} = key
-        addSearchDivToHtml(strMeal, strMealThumb);
+        addSearchBlockToHtml(strMeal, strMealThumb);
     }
     return mealByNameItem;
 }
@@ -48,7 +50,7 @@ const startAsyncFunc = async function(){
     const randomMeal = await getRandomMeal();
     const mealById = await getMealById();
     const {strMeal, strMealThumb} = randomMeal;
-    addRandomDivToHtml(strMeal, strMealThumb);
+    addBlockToHtml(strMeal, strMealThumb);
 }
 startAsyncFunc();
 const createArticleComponent = function(strMeal, strMealThumb, sectionName){
@@ -69,18 +71,31 @@ const createArticleComponent = function(strMeal, strMealThumb, sectionName){
             `
     sectionName.append(randomMealSection);
 }
-const addRandomDivToHtml = function(strMeal, strMealThumb){
+const addBlockToHtml = function(strMeal, strMealThumb){
     createArticleComponent(strMeal, strMealThumb, containerRandomRecipe);
 }
-const addSearchDivToHtml = function (strMeal, strMealThumb){
-    createArticleComponent(strMeal, strMealThumb, searchSection)
+const addSearchBlockToHtml = function (strMeal, strMealThumb){
+   // createArticleComponent(strMeal, strMealThumb, searchSection)
+   addSearchListToHtml(strMeal, strMealThumb)
 }
+const addSearchListToHtml = function(strMeal, strMealThumb){
+
+    const listItemElement = document.createElement("li");
+    listItemElement.classList.add("navigation__list--item");
+    listItemElement.innerHTML = `
+        szukasz: ${strMeal}
+    `
+    ulList.append(listItemElement);
+}
+
 const searchLetterWrote = function(){
     setTimeout(() => {
         const name = searchBox.value;
         console.log(name.length)
         if(name !== " " && name !== "" && name.length >= 2){
             getMealByName(name);
+        } else if (name === " " || name === "" || name.length < 2){
+            ulList.innerHTML = "";
         }
     }, 300);
 }
