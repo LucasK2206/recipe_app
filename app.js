@@ -5,7 +5,6 @@ const searchBox = document.querySelector(".navigation__search--input");
 const searchSection = document.querySelector(".containerSearch");
 const ulList = document.querySelector(".navigation__list");
 
-
 document.addEventListener("DOMContentLoaded", () => {
     addEventListeners();
 })
@@ -14,12 +13,12 @@ const addEventListeners = function(){
     searchBox.addEventListener("focus", () => {
         setTimeout(() => {
             ulList.classList.toggle("navigation__list--disabled");
-        }, 600);
+        }, 100);
     })
     searchBox.addEventListener("blur", () => {
         setTimeout(() => {
             ulList.classList.toggle("navigation__list--disabled");
-        }, 600);
+        }, 100);
     })
     searchBox.addEventListener("input", searchLetterWrote)
 }
@@ -41,10 +40,6 @@ const getMealByName = async function(mealName){
     const request = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=%${mealName}%`);
     const responseMealByName = await request.json();
     const mealByNameItem = await responseMealByName.meals;
-    for (const key of mealByNameItem){
-        const {strMeal, strMealThumb} = key
-        addSearchListToHtml(strMeal, strMealThumb);
-    }
     return mealByNameItem;
 }
 const getMealById = async function(){
@@ -85,11 +80,12 @@ const addBlockToHtml = function(strMeal, strMealThumb){
     createArticleComponent(strMeal, strMealThumb, containerRandomRecipe);
 }
 
-const addSearchListToHtml = function(strMeal, strMealThumb){
+const addSearchListToHtml = function(idMeal, strMeal, strMealThumb){
 
     const listItemElement = document.createElement("li");
-    listItemElement.addEventListener("click", box => {
-        console.log(box)
+    listItemElement.addEventListener("click", (singleMealCell) => {
+        singleMealCell.target.id = idMeal;
+        console.log(singleMealCell.target.id)
         //createArticleComponent(searchBox)
     })
     listItemElement.classList.add("navigation__list--item");
@@ -101,12 +97,19 @@ const addSearchListToHtml = function(strMeal, strMealThumb){
 
 const searchLetterWrote = function(){
     const checkName = searchBox.value;
-    console.log(checkName);
     setTimeout(() => {
         const name = searchBox.value;
         if(checkName === name){
             if(name !== " " && name !== "" && name.length >= 2){
-                getMealByName(name);
+                getMealByName(name).then(
+                    (result) => {
+                        console.log(result)
+                        for (const key of result){
+                            const {idMeal, strMeal, strMealThumb} = key
+                            addSearchListToHtml(idMeal, strMeal, strMealThumb);
+                        }
+                    }
+                );
                 console.log(name)
             } else if (name === " " || name === "" || name.length < 2){
                 ulList.innerHTML = "";
