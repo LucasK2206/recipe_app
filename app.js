@@ -5,6 +5,7 @@ const searchBox = document.querySelector(".navigation__search--input");
 const searchSection = document.querySelector(".containerSearch");
 const ulList = document.querySelector(".navigation__list");
 
+
 document.addEventListener("DOMContentLoaded", () => {
     addEventListeners();
 })
@@ -41,7 +42,6 @@ const getMealByName = async function(mealName){
     const responseMealByName = await request.json();
     const mealByNameItem = await responseMealByName.meals;
     for (const key of mealByNameItem){
-        console.log(key);
         const {strMeal, strMealThumb} = key
         addSearchListToHtml(strMeal, strMealThumb);
     }
@@ -93,21 +93,24 @@ const addSearchListToHtml = function(strMeal, strMealThumb){
         //createArticleComponent(searchBox)
     })
     listItemElement.classList.add("navigation__list--item");
-    listItemElement.innerHTML = `
-        ${strMeal}
-    `
+    listItemElement.value = strMeal
+    listItemElement.innerHTML = `${strMeal}`;
     ulList.append(listItemElement);
 
 }
 
 const searchLetterWrote = function(){
+    const checkName = searchBox.value;
+    console.log(checkName);
     setTimeout(() => {
         const name = searchBox.value;
-        console.log(name)
-        if(name !== " " && name !== "" && name.length >= 2){
-            getMealByName(name);
-        } else if (name === " " || name === "" || name.length < 2){
-            ulList.innerHTML = "";
+        if(checkName === name){
+            if(name !== " " && name !== "" && name.length >= 2){
+                getMealByName(name);
+                console.log(name)
+            } else if (name === " " || name === "" || name.length < 2){
+                ulList.innerHTML = "";
+            }
         }
     }, 300);
 }
