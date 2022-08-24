@@ -137,27 +137,20 @@ body {
   flex-direction: column;
 }
 
-.containerRand, .containerSearch {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.containerRand__title, .containerSearch__title {
-  padding: 5px 10px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #588157;
-  text-shadow: 1px 1px rgb(170, 170, 170);
-}
-
 .container {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   width: 100%;
+}
+.container__title {
+  font-size: 1.7rem;
+  padding: 5px 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #588157;
+  text-shadow: 1px 1px rgb(170, 170, 170);
 }
 .container__recipe {
   background: #fff;

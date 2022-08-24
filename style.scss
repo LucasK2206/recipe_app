@@ -129,22 +129,19 @@ body{
     margin-top: 60px;
     flex-direction: column;
 }
-.containerRand, .containerSearch{
-    width: 100%;
+
+.container{
     @include flex-display;
     flex-direction: column;
+    width: 100%;
     &__title{
+        font-size: 1.7rem;
         padding: 5px 10px;
         font-weight: bold;
         text-transform: uppercase;
         color: #588157;
         text-shadow: 1px 1px rgb(170, 170, 170);
     }
-}
-.container{
-    @include flex-display;
-    flex-direction: column;
-    width: 100%;
     &__recipe{
        background: $color_white;
         width: 270px;

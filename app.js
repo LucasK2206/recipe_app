@@ -43,10 +43,10 @@ const getMealByName = async function(mealName){
     return mealByNameItem;
 }
 const getMealById = async function(){
-    const request = await fetch("https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772");
+    const request = await fetch("https://www.themealdb.com/api/json/v1/1/lookup.php?i=5555");
     const responseMealById = await request.json();
-    const mealByIdItem = await responseMealById.meals;
-    return mealByIdItem;
+    const mealByItemId = await responseMealById.meals;
+    return mealByItemId;
 
 }
 
@@ -58,10 +58,10 @@ const startAsyncFunc = async function(){
     addBlockToHtml(strMeal, strMealThumb);
 }
 startAsyncFunc();
-const createArticleComponent = function(strMeal, strMealThumb, sectionName){
+const createArticleComponent = function(containerTitle, sectionName, strMeal, strMealThumb){
     const randomMealSection = document.createElement("article");
     randomMealSection.classList.add("container__recipe");
-
+    sectionName.innerHTML = `<h1 class="container__title">${containerTitle}</h1>`
     randomMealSection.innerHTML =  `
                 <h1 class="container__recipe--name">${strMeal}</h1>
 
@@ -77,15 +77,16 @@ const createArticleComponent = function(strMeal, strMealThumb, sectionName){
     sectionName.append(randomMealSection);
 }
 const addBlockToHtml = function(strMeal, strMealThumb){
-    createArticleComponent(strMeal, strMealThumb, containerRandomRecipe);
+    const containerTitle = "Random dish";
+    createArticleComponent(containerTitle, containerRandomRecipe, strMeal, strMealThumb);
 }
 
 const addSearchListToHtml = function(idMeal, strMeal, strMealThumb){
 
     const listItemElement = document.createElement("li");
-    listItemElement.addEventListener("click", (singleMealCell) => {
-        singleMealCell.target.id = idMeal;
-        console.log(singleMealCell.target.id)
+    listItemElement.addEventListener("click", () => {
+        const containerTitle = "Search dish";
+        createArticleComponent(containerTitle, searchSection, strMeal, strMealThumb);
         //createArticleComponent(searchBox)
     })
     listItemElement.classList.add("navigation__list--item");
