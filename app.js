@@ -4,7 +4,6 @@ const containerRandomRecipe = document.querySelector(".containerRand");
 const searchBox = document.querySelector(".navigation__search--input");
 const searchSection = document.querySelector(".containerSearch");
 const ulList = document.querySelector(".navigation__list");
-
 document.addEventListener("DOMContentLoaded", () => {
     addEventListeners();
 })
@@ -75,6 +74,11 @@ const createArticleComponent = function(containerTitle, sectionName, strMeal, st
                 </div>
             `
     sectionName.append(randomMealSection);
+    const favBtn = document.querySelector(".buttons__fav");
+    favBtn.addEventListener("click", (box) => {
+        box.target.id = strMeal;
+        console.log(box.target.id)
+    })
 }
 const addBlockToHtml = function(strMeal, strMealThumb){
     const containerTitle = "Random dish";
