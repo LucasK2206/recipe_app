@@ -4,6 +4,8 @@ const containerRandomRecipe = document.querySelector(".containerRand");
 const searchBox = document.querySelector(".navigation__search--input");
 const searchSection = document.querySelector(".containerSearch");
 const ulList = document.querySelector(".navigation__list");
+const containerFav = document.querySelector(".containerFav");
+console.log(containerFav)
 document.addEventListener("DOMContentLoaded", () => {
     addEventListeners();
 })
@@ -19,7 +21,8 @@ const addEventListeners = function(){
             ulList.classList.toggle("navigation__list--disabled");
         }, 100);
     })
-    searchBox.addEventListener("input", searchLetterWrote)
+    searchBox.addEventListener("input", searchLetterWrote);
+    getElementsFromLs();
 }
 const handleMagnifierClick = function() {
     nav.classList.toggle("navigation__search--active")
@@ -54,10 +57,10 @@ const startAsyncFunc = async function(){
     addBlockToHtml(idMeal, strMeal, strMealThumb);
 }
 startAsyncFunc();
-const createArticleComponent = function(containerTitle, sectionName, idMeal, strMeal, strMealThumb){
+const createArticleComponent = function(containerTitle = "", sectionName, idMeal, strMeal, strMealThumb){
     const randomMealSection = document.createElement("article");
     randomMealSection.classList.add("container__recipe");
-    sectionName.innerHTML = `<h1 class="container__title">${containerTitle}</h1>`
+
     randomMealSection.innerHTML =  `
                 <h1 class="container__recipe--name">${strMeal}</h1>
 
@@ -70,7 +73,9 @@ const createArticleComponent = function(containerTitle, sectionName, idMeal, str
                     <button class="buttons__show"></button>
                 </div>
             `
-    sectionName.append(randomMealSection);
+            console.log(sectionName, randomMealSection)
+        sectionName.append(randomMealSection);
+
     const favBtn = document.querySelector(".buttons__fav");
     favBtn.addEventListener("click", (meal) => {
         meal.target.id = idMeal;
@@ -79,12 +84,25 @@ const createArticleComponent = function(containerTitle, sectionName, idMeal, str
             const result = response[0];
             if(localStorage.getItem(mealTargetId)  === null ){
                 localStorage.setItem(mealTargetId, JSON.stringify(result));
+
+                // const getMealContentFromLs = JSON.parse(localStorage.getItem(mealTargetId));
+                // const {idMeal, strMeal, strMealThumb} = getMealContentFromLs;
+                // createArticleComponent("Fav dishes", containerFav, idMeal, strMeal, strMealThumb)
             } else {
                 localStorage.removeItem(mealTargetId);
             }
         });
     })
 }
+const getElementsFromLs = function() {
+    for(let i=0; localStorage.length > i; i++){
+        const mealKey = localStorage.key(i);
+        const getMealContentFromLs = JSON.parse(localStorage.getItem(mealKey));
+        const {idMeal, strMeal, strMealThumb} = getMealContentFromLs;
+        createArticleComponent("" ,containerFav, idMeal, strMeal, strMealThumb);
+    }
+}
+
 const addBlockToHtml = function(idMeal, strMeal, strMealThumb){
     const containerTitle = "Random dish";
     createArticleComponent(containerTitle, containerRandomRecipe, idMeal , strMeal, strMealThumb);
@@ -113,14 +131,12 @@ const searchLetterWrote = function(){
             if(name !== " " && name !== "" && name.length >= 2){
                 getMealByName(name).then(
                     (result) => {
-                        console.log(result)
                         for (const key of result){
                             const {idMeal, strMeal, strMealThumb} = key
                             addSearchListToHtml(idMeal, strMeal, strMealThumb);
                         }
                     }
                 );
-                console.log(name)
             } else if (name === " " || name === "" || name.length < 2){
                 ulList.innerHTML = "";
             }
