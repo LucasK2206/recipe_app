@@ -41,23 +41,20 @@ const getMealByName = async function(mealName){
     const mealByNameItem = await responseMealByName.meals;
     return mealByNameItem;
 }
-const getMealById = async function(){
-    const request = await fetch("https://www.themealdb.com/api/json/v1/1/lookup.php?i=5555");
+const getMealById = async function(mealId){
+    const request = await fetch("https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + mealId);
     const responseMealById = await request.json();
     const mealByItemId = await responseMealById.meals;
     return mealByItemId;
-
 }
-
 const startAsyncFunc = async function(){
 
     const randomMeal = await getRandomMeal();
-    const mealById = await getMealById();
-    const {strMeal, strMealThumb} = randomMeal;
-    addBlockToHtml(strMeal, strMealThumb);
+    const {idMeal, strMeal, strMealThumb} = randomMeal;
+    addBlockToHtml(idMeal, strMeal, strMealThumb);
 }
 startAsyncFunc();
-const createArticleComponent = function(containerTitle, sectionName, strMeal, strMealThumb){
+const createArticleComponent = function(containerTitle, sectionName, idMeal, strMeal, strMealThumb){
     const randomMealSection = document.createElement("article");
     randomMealSection.classList.add("container__recipe");
     sectionName.innerHTML = `<h1 class="container__title">${containerTitle}</h1>`
@@ -75,14 +72,22 @@ const createArticleComponent = function(containerTitle, sectionName, strMeal, st
             `
     sectionName.append(randomMealSection);
     const favBtn = document.querySelector(".buttons__fav");
-    favBtn.addEventListener("click", (box) => {
-        box.target.id = strMeal;
-        console.log(box.target.id)
+    favBtn.addEventListener("click", (meal) => {
+        meal.target.id = idMeal;
+        const mealTargetId = meal.target.id;
+        getMealById(mealTargetId).then(response => {
+            const result = response[0];
+            if(localStorage.getItem(mealTargetId)  === null ){
+                localStorage.setItem(mealTargetId, JSON.stringify(result));
+            } else {
+                localStorage.removeItem(mealTargetId);
+            }
+        });
     })
 }
-const addBlockToHtml = function(strMeal, strMealThumb){
+const addBlockToHtml = function(idMeal, strMeal, strMealThumb){
     const containerTitle = "Random dish";
-    createArticleComponent(containerTitle, containerRandomRecipe, strMeal, strMealThumb);
+    createArticleComponent(containerTitle, containerRandomRecipe, idMeal , strMeal, strMealThumb);
 }
 
 const addSearchListToHtml = function(idMeal, strMeal, strMealThumb){
@@ -90,7 +95,7 @@ const addSearchListToHtml = function(idMeal, strMeal, strMealThumb){
     const listItemElement = document.createElement("li");
     listItemElement.addEventListener("click", () => {
         const containerTitle = "Search dish";
-        createArticleComponent(containerTitle, searchSection, strMeal, strMealThumb);
+        createArticleComponent(containerTitle, searchSection, idMeal , strMeal, strMealThumb);
         //createArticleComponent(searchBox)
     })
     listItemElement.classList.add("navigation__list--item");
