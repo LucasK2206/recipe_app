@@ -57,7 +57,7 @@ const startAsyncFunc = async function(){
     addBlockToHtml(idMeal, strMeal, strMealThumb);
 }
 startAsyncFunc();
-const createArticleComponent = function(containerTitle = "", sectionName, idMeal, strMeal, strMealThumb){
+const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThumb){
     const randomMealSection = document.createElement("article");
     randomMealSection.classList.add("container__recipe");
 
@@ -104,16 +104,16 @@ const getElementsFromLs = function() {
 }
 
 const addBlockToHtml = function(idMeal, strMeal, strMealThumb){
-    const containerTitle = "Random dish";
-    createArticleComponent(containerTitle, containerRandomRecipe, idMeal , strMeal, strMealThumb);
+    containerRandomRecipe.innerHTML = "Random Recipe";
+    createArticleComponent(containerRandomRecipe, idMeal , strMeal, strMealThumb);
 }
 
 const addSearchListToHtml = function(idMeal, strMeal, strMealThumb){
 
     const listItemElement = document.createElement("li");
     listItemElement.addEventListener("click", () => {
-        const containerTitle = "Search dish";
-        createArticleComponent(containerTitle, searchSection, idMeal , strMeal, strMealThumb);
+        searchSection.innerHTML = "Search dish"
+        createArticleComponent(searchSection, idMeal , strMeal, strMealThumb);
         //createArticleComponent(searchBox)
     })
     listItemElement.classList.add("navigation__list--item");
