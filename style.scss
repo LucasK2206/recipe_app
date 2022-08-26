@@ -176,8 +176,26 @@ body{
     justify-content: space-around;
     &__fav{
         border: none;
+        outline: 2px solid $color_white;
         cursor: pointer;
         padding: 10px;
+        background: transparent;
+        color: $color_white;
+        text-decoration: none;
+        transition: color .3s ease-in-out;
+        position: relative;
+        &:hover{
+            color: #345f33;
+        }
+        &:before{
+            height: 100%;
+            width: 0;
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: skewX(35deg);
+        }
     }
     &__show{
         width: 15px;

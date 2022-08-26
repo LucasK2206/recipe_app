@@ -191,8 +191,26 @@ body {
 }
 .buttons__fav {
   border: none;
+  outline: 2px solid #fff;
   cursor: pointer;
   padding: 10px;
+  background: transparent;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+  position: relative;
+}
+.buttons__fav:hover {
+  color: #345f33;
+}
+.buttons__fav:before {
+  height: 100%;
+  width: 0;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: skewX(35deg);
 }
 .buttons__show {
   width: 15px;
