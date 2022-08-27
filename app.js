@@ -75,32 +75,33 @@ const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThu
             `
             console.log(sectionName, randomMealSection)
         sectionName.append(randomMealSection);
+        randomMealSection.addEventListener("click", (meal) => {
+            meal.target.id = idMeal;
+            const mealTargetId = meal.target.id
+            getMealById(mealTargetId).then(response => {
+                const result = response[0];
+                if(localStorage.getItem(mealTargetId)  === null ){
+                    localStorage.setItem(mealTargetId, JSON.stringify(result));
 
-    const favBtn = document.querySelector(".buttons__fav");
-    favBtn.addEventListener("click", (meal) => {
-        meal.target.id = idMeal;
-        const mealTargetId = meal.target.id;
-        getMealById(mealTargetId).then(response => {
-            const result = response[0];
-            if(localStorage.getItem(mealTargetId)  === null ){
-                localStorage.setItem(mealTargetId, JSON.stringify(result));
-
-                // const getMealContentFromLs = JSON.parse(localStorage.getItem(mealTargetId));
-                // const {idMeal, strMeal, strMealThumb} = getMealContentFromLs;
-                // createArticleComponent("Fav dishes", containerFav, idMeal, strMeal, strMealThumb)
-            } else {
-                localStorage.removeItem(mealTargetId);
-            }
-        });
-    })
+                    // const getMealContentFromLs = JSON.parse(localStorage.getItem(mealTargetId));
+                    // const {idMeal, strMeal, strMealThumb} = getMealContentFromLs;
+                    // createArticleComponent("Fav dishes", containerFav, idMeal, strMeal, strMealThumb)
+                } else {
+                    localStorage.removeItem(mealTargetId);
+                }
+            });
+        })
 }
 const getElementsFromLs = function() {
     for(let i=0; localStorage.length > i; i++){
         const mealKey = localStorage.key(i);
         const getMealContentFromLs = JSON.parse(localStorage.getItem(mealKey));
         const {idMeal, strMeal, strMealThumb} = getMealContentFromLs;
-        createArticleComponent("" ,containerFav, idMeal, strMeal, strMealThumb);
+        createArticleComponent(containerFav, idMeal, strMeal, strMealThumb);
     }
+    const favBtn = document.querySelector(".buttons__fav");
+    favBtn.addEventListener("click", (meal) => {
+    })
 }
 
 const addBlockToHtml = function(idMeal, strMeal, strMealThumb){
