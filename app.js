@@ -58,10 +58,11 @@ const startAsyncFunc = async function(){
 }
 startAsyncFunc();
 const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThumb){
-    const randomMealSection = document.createElement("article");
-    randomMealSection.classList.add("container__recipe");
+    const mealSectionToAdd = document.createElement("article");
+    mealSectionToAdd.classList.add("container__recipe");
+    mealSectionToAdd.classList.add(`${idMeal}`);
 
-    randomMealSection.innerHTML =  `
+    mealSectionToAdd.innerHTML =  `
                 <h1 class="container__recipe--name">${strMeal}</h1>
 
                 <div class="container__recipe--img">
@@ -73,21 +74,21 @@ const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThu
                     <button class="buttons__show"></button>
                 </div>
             `
-            console.log(sectionName, randomMealSection)
-        sectionName.append(randomMealSection);
-        randomMealSection.addEventListener("click", (meal) => {
+            console.log(sectionName, mealSectionToAdd)
+        sectionName.append(mealSectionToAdd);
+        mealSectionToAdd.addEventListener("click", (meal) => {
             meal.target.id = idMeal;
             const mealTargetId = meal.target.id
             getMealById(mealTargetId).then(response => {
                 const result = response[0];
                 if(localStorage.getItem(mealTargetId)  === null ){
                     localStorage.setItem(mealTargetId, JSON.stringify(result));
-
-                    // const getMealContentFromLs = JSON.parse(localStorage.getItem(mealTargetId));
-                    // const {idMeal, strMeal, strMealThumb} = getMealContentFromLs;
-                    // createArticleComponent("Fav dishes", containerFav, idMeal, strMeal, strMealThumb)
+                    createArticleComponent(containerFav, idMeal, strMeal, strMealThumb)
+                    console.log("elo")
                 } else {
                     localStorage.removeItem(mealTargetId);
+                    containerFav.removeChild(mealSectionToAdd);
+
                 }
             });
         })
@@ -99,9 +100,6 @@ const getElementsFromLs = function() {
         const {idMeal, strMeal, strMealThumb} = getMealContentFromLs;
         createArticleComponent(containerFav, idMeal, strMeal, strMealThumb);
     }
-    const favBtn = document.querySelector(".buttons__fav");
-    favBtn.addEventListener("click", (meal) => {
-    })
 }
 
 const addBlockToHtml = function(idMeal, strMeal, strMealThumb){
