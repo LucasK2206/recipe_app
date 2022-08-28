@@ -22,6 +22,7 @@ const addEventListeners = function(){
         }, 100);
     })
     searchBox.addEventListener("input", searchLetterWrote);
+
     getElementsFromLs();
 }
 const handleMagnifierClick = function() {
@@ -60,7 +61,10 @@ startAsyncFunc();
 const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThumb){
     const mealSectionToAdd = document.createElement("article");
     mealSectionToAdd.classList.add("container__recipe");
-    mealSectionToAdd.classList.add(`${idMeal}`);
+    mealSectionToAdd.setAttribute("title",`${idMeal}`);
+    if(sectionName === containerRandomRecipe || sectionName === searchSection){
+        mealSectionToAdd.classList.add("indelible");
+    }
 
     mealSectionToAdd.innerHTML =  `
                 <h1 class="container__recipe--name">${strMeal}</h1>
@@ -74,25 +78,58 @@ const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThu
                     <button class="buttons__show"></button>
                 </div>
             `
-            console.log(sectionName, mealSectionToAdd)
-        sectionName.append(mealSectionToAdd);
-        mealSectionToAdd.addEventListener("click", (meal) => {
-            meal.target.id = idMeal;
-            const mealTargetId = meal.target.id
-            getMealById(mealTargetId).then(response => {
-                const result = response[0];
-                if(localStorage.getItem(mealTargetId)  === null ){
-                    localStorage.setItem(mealTargetId, JSON.stringify(result));
-                    createArticleComponent(containerFav, idMeal, strMeal, strMealThumb)
-                    console.log("elo")
-                } else {
-                    localStorage.removeItem(mealTargetId);
-                    containerFav.removeChild(mealSectionToAdd);
 
-                }
-            });
-        })
+        sectionName.append(mealSectionToAdd);
+
+        const getButtonFromArticle =  mealSectionToAdd.children[2].children[0];
+        if(!mealSectionToAdd.classList.contains("indelible")){
+            getButtonFromArticle.innerHTML = "Remove";
+        }
+
+        getButtonFromArticle.addEventListener("click", handleFavBtnClick)
 }
+        // mealSectionToAdd.addEventListener("click", (meal) => {
+        //     meal.target.id = idMeal;
+        //     const mealTargetId = meal.target.id
+        //     getMealById(mealTargetId).then(response => {
+        //         const result = response[0];
+        //         if(localStorage.getItem(mealTargetId)  === null ){
+        //             localStorage.setItem(mealTargetId, JSON.stringify(result));
+        //             createArticleComponent(containerFav, idMeal, strMeal, strMealThumb);
+
+        //             console.log("elo")
+        //         } else if(localStorage.getItem(mealTargetId)  !== null){
+        //             localStorage.removeItem(mealTargetId);
+        //             const getItemId = document.getElementById(`${idMeal}`);
+        //             getItemId.remove();
+
+        //         }
+        //     });
+        // })
+const handleFavBtnClick = function(){
+    console.dir(this.parentNode.parentNode.title)
+    const mealArticle = this.parentNode.parentNode;
+    const mealTargetTitle = this.parentNode.parentNode.title;
+    getMealById(mealTargetTitle).then((response) => {
+        const result = response[0];
+        console.log(Boolean(localStorage.getItem(mealTargetTitle)))
+        const {idMeal, strMeal, strMealThumb} = result;
+
+        if(Boolean(localStorage.getItem(mealTargetTitle))  === false ){
+            localStorage.setItem(mealTargetTitle, JSON.stringify(result));
+            createArticleComponent(containerFav, idMeal, strMeal, strMealThumb);
+            console.log("add")
+            console.dir(this)
+
+        } else if(Boolean(localStorage.getItem(mealTargetTitle)) && !mealArticle.classList.contains("indelible")){
+            localStorage.removeItem(mealTargetTitle);
+            console.log("remove");
+            mealArticle.parentElement.removeChild(mealArticle)
+        }
+    })
+}
+
+
 const getElementsFromLs = function() {
     for(let i=0; localStorage.length > i; i++){
         const mealKey = localStorage.key(i);
@@ -134,6 +171,9 @@ const searchLetterWrote = function(){
                             const {idMeal, strMeal, strMealThumb} = key
                             addSearchListToHtml(idMeal, strMeal, strMealThumb);
                         }
+                    },
+                    (reject) => {
+                        console.log(reject)
                     }
                 );
             } else if (name === " " || name === "" || name.length < 2){
