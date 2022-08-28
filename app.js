@@ -5,7 +5,7 @@ const searchBox = document.querySelector(".navigation__search--input");
 const searchSection = document.querySelector(".containerSearch");
 const ulList = document.querySelector(".navigation__list");
 const containerFav = document.querySelector(".containerFav");
-console.log(containerFav)
+
 document.addEventListener("DOMContentLoaded", () => {
     addEventListeners();
 })
@@ -54,17 +54,32 @@ const getMealById = async function(mealId){
 const startAsyncFunc = async function(){
 
     const randomMeal = await getRandomMeal();
-    const {idMeal, strMeal, strMealThumb} = randomMeal;
-    addBlockToHtml(idMeal, strMeal, strMealThumb);
+    const {idMeal, strMeal, strMealThumb, ...rest} = randomMeal;
+    addBlockToHtml(idMeal, strMeal, strMealThumb, rest);
 }
 startAsyncFunc();
-const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThumb){
+const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThumb, rest){
+
+    console.log(rest)
     const mealSectionToAdd = document.createElement("article");
     mealSectionToAdd.classList.add("container__recipe");
     mealSectionToAdd.setAttribute("title",`${idMeal}`);
     if(sectionName === containerRandomRecipe || sectionName === searchSection){
         mealSectionToAdd.classList.add("indelible");
     }
+   for(let i=1; i<=20; i++){
+        if(rest["strIngredient"+i] !== ""){
+            console.log(`${rest["strIngredient"+i]} : ${rest["strMeasure"+i]}`)
+        }
+   }
+   const ingredientsTab = [];
+    for(let i=1; i<=20; i++){
+        if(rest["strIngredient"+i] !== ""){
+            const singleIngredient = `${rest["strIngredient"+i]} : ${rest["strMeasure"+i]}`;
+            ingredientsTab.push(singleIngredient);
+        }
+    }
+
 
     mealSectionToAdd.innerHTML =  `
                 <h1 class="container__recipe--name">${strMeal}</h1>
@@ -78,20 +93,16 @@ const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThu
                     <button class="buttons__show"></button>
                 </div>
                 <div class="recipe">
-                <h2 class="recipe__description">Description</h2>
+                <h2 class="recipe__header">How to prepare:</h2>
+                <span class="recipe__description">${rest.strInstructions}</span>
 
-                Składniki:
+                <h2 class="recipe__header">Ingredients:</h2>
+                ${
+                    ingredientsTab.map(ingredient =>
+                        `<span class="recipe__description">${ingredient}</span><br>`
+                    ).join(" ")
+                }
 
-                200g makaronu spaghetti
-                1 cebula
-                2 ząbki czosnku
-                3 łyżki oliwy z oliwek
-                puszka pokrojonych pomidorów w sosie pomidorowym
-                zioła (oregano, majeranek, bazylia)
-                sól
-                pieprz
-                parmezan
-                </div>
             `
 
         sectionName.append(mealSectionToAdd);
@@ -106,34 +117,17 @@ const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThu
         getFavBtnFromArticle.addEventListener("click", handleFavBtnClick)
         getShowBtnFromArticle.addEventListener("click", handleShowBtnClick)
 }
-        // mealSectionToAdd.addEventListener("click", (meal) => {
-        //     meal.target.id = idMeal;
-        //     const mealTargetId = meal.target.id
-        //     getMealById(mealTargetId).then(response => {
-        //         const result = response[0];
-        //         if(localStorage.getItem(mealTargetId)  === null ){
-        //             localStorage.setItem(mealTargetId, JSON.stringify(result));
-        //             createArticleComponent(containerFav, idMeal, strMeal, strMealThumb);
 
-        //             console.log("elo")
-        //         } else if(localStorage.getItem(mealTargetId)  !== null){
-        //             localStorage.removeItem(mealTargetId);
-        //             const getItemId = document.getElementById(`${idMeal}`);
-        //             getItemId.remove();
-
-        //         }
-        //     });
-        // })
 const handleFavBtnClick = function(){
     const mealArticle = this.parentNode.parentNode;
     const mealTargetTitle = this.parentNode.parentNode.title;
     getMealById(mealTargetTitle).then((response) => {
         const result = response[0];
-        const {idMeal, strMeal, strMealThumb} = result;
+        const {idMeal, strMeal, strMealThumb, ...rest} = result;
 
         if(Boolean(localStorage.getItem(mealTargetTitle))  === false ){
             localStorage.setItem(mealTargetTitle, JSON.stringify(result));
-            createArticleComponent(containerFav, idMeal, strMeal, strMealThumb);
+            createArticleComponent(containerFav, idMeal, strMeal, strMealThumb, rest);
             console.log("add")
             console.dir(this)
 
@@ -149,27 +143,26 @@ const handleShowBtnClick = function() {
     recipeDiv.classList.toggle("active")
 }
 
-
 const getElementsFromLs = function() {
     for(let i=0; localStorage.length > i; i++){
         const mealKey = localStorage.key(i);
         const getMealContentFromLs = JSON.parse(localStorage.getItem(mealKey));
-        const {idMeal, strMeal, strMealThumb} = getMealContentFromLs;
-        createArticleComponent(containerFav, idMeal, strMeal, strMealThumb);
+        const {idMeal, strMeal, strMealThumb, ...rest} = getMealContentFromLs;
+        createArticleComponent(containerFav, idMeal, strMeal, strMealThumb, rest);
     }
 }
 
-const addBlockToHtml = function(idMeal, strMeal, strMealThumb){
+const addBlockToHtml = function(idMeal, strMeal, strMealThumb, rest){
     containerRandomRecipe.innerHTML = "Random Recipe";
-    createArticleComponent(containerRandomRecipe, idMeal , strMeal, strMealThumb);
+    createArticleComponent(containerRandomRecipe, idMeal , strMeal, strMealThumb, rest);
 }
 
-const addSearchListToHtml = function(idMeal, strMeal, strMealThumb){
+const addSearchListToHtml = function(idMeal, strMeal, strMealThumb, rest){
 
     const listItemElement = document.createElement("li");
     listItemElement.addEventListener("click", () => {
         searchSection.innerHTML = "Search dish"
-        createArticleComponent(searchSection, idMeal , strMeal, strMealThumb);
+        createArticleComponent(searchSection, idMeal , strMeal, strMealThumb, rest);
         //createArticleComponent(searchBox)
     })
     listItemElement.classList.add("navigation__list--item");
@@ -189,8 +182,8 @@ const searchLetterWrote = function(){
                     (result) => {
                         if(result){
                             for (const key of result){
-                                const {idMeal, strMeal, strMealThumb} = key
-                                addSearchListToHtml(idMeal, strMeal, strMealThumb);
+                                const {idMeal, strMeal, strMealThumb, ...rest} = key
+                                addSearchListToHtml(idMeal, strMeal, strMealThumb, rest);
                             }
                         }
                     },
