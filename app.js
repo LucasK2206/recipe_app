@@ -187,9 +187,11 @@ const searchLetterWrote = function(){
             if(name !== " " && name !== "" && name.length >= 2){
                 getMealByName(name).then(
                     (result) => {
-                        for (const key of result){
-                            const {idMeal, strMeal, strMealThumb} = key
-                            addSearchListToHtml(idMeal, strMeal, strMealThumb);
+                        if(result){
+                            for (const key of result){
+                                const {idMeal, strMeal, strMealThumb} = key
+                                addSearchListToHtml(idMeal, strMeal, strMealThumb);
+                            }
                         }
                     },
                     (reject) => {
