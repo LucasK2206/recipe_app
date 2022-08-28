@@ -154,7 +154,7 @@ body{
             color: $color_white;
             position: absolute;
             padding: inherit;
-            top: 50%;
+            top: 100px;
             transform: translateY(-50%);
             padding: 5px;
             background:#588157;
@@ -200,7 +200,7 @@ body{
     &__show{
         width: 15px;
         height: 15px;;
-        padding: 10px;
+        padding: 13px;
         position: relative;
         background: transparent;
         border: none;
@@ -209,7 +209,7 @@ body{
             content: "";
             position: absolute;
             background: $color_white;
-            width: 14px;
+            width: 17px;
             height: 5px;
             transform: rotate(45deg);
             left: 0;
@@ -222,10 +222,22 @@ body{
             top: 3;
             content: "";
             background: $color_white;
-            width: 14px;
+            width: 17px;
             height: 5px;
             transform: rotate(-45deg);
             pointer-events: none;
         }
     }
+}
+.recipe{
+    display: none;
+    text-transform: none;
+    font-size: 1rem;
+    font-family: 'Lexend Mega', sans-serif;
+    font-weight: 100;
+    color: #000;
+    padding: 5px 0;
+}
+.active{
+    display: block;
 }

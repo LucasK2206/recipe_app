@@ -77,16 +77,34 @@ const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThu
                     <button class="buttons__fav">Add to fav</button>
                     <button class="buttons__show"></button>
                 </div>
+                <div class="recipe">
+                <h2 class="recipe__description">Description</h2>
+
+                Składniki:
+
+                200g makaronu spaghetti
+                1 cebula
+                2 ząbki czosnku
+                3 łyżki oliwy z oliwek
+                puszka pokrojonych pomidorów w sosie pomidorowym
+                zioła (oregano, majeranek, bazylia)
+                sól
+                pieprz
+                parmezan
+                </div>
             `
 
         sectionName.append(mealSectionToAdd);
 
-        const getButtonFromArticle =  mealSectionToAdd.children[2].children[0];
+        const getFavBtnFromArticle =  mealSectionToAdd.children[2].children[0];
+        const getShowBtnFromArticle = mealSectionToAdd.children[2].children[1];
+
         if(!mealSectionToAdd.classList.contains("indelible")){
-            getButtonFromArticle.innerHTML = "Remove";
+            getFavBtnFromArticle.innerHTML = "Remove";
         }
 
-        getButtonFromArticle.addEventListener("click", handleFavBtnClick)
+        getFavBtnFromArticle.addEventListener("click", handleFavBtnClick)
+        getShowBtnFromArticle.addEventListener("click", handleShowBtnClick)
 }
         // mealSectionToAdd.addEventListener("click", (meal) => {
         //     meal.target.id = idMeal;
@@ -107,12 +125,10 @@ const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThu
         //     });
         // })
 const handleFavBtnClick = function(){
-    console.dir(this.parentNode.parentNode.title)
     const mealArticle = this.parentNode.parentNode;
     const mealTargetTitle = this.parentNode.parentNode.title;
     getMealById(mealTargetTitle).then((response) => {
         const result = response[0];
-        console.log(Boolean(localStorage.getItem(mealTargetTitle)))
         const {idMeal, strMeal, strMealThumb} = result;
 
         if(Boolean(localStorage.getItem(mealTargetTitle))  === false ){
@@ -127,6 +143,10 @@ const handleFavBtnClick = function(){
             mealArticle.parentElement.removeChild(mealArticle)
         }
     })
+}
+const handleShowBtnClick = function() {
+    const recipeDiv = this.parentNode.nextElementSibling;
+    recipeDiv.classList.toggle("active")
 }
 
 
