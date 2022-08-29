@@ -74,7 +74,7 @@ const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThu
    }
    const ingredientsTab = [];
     for(let i=1; i<=20; i++){
-        if(rest["strIngredient"+i] !== ""){
+        if(rest["strIngredient"+i]){
             const singleIngredient = `${rest["strIngredient"+i]} : ${rest["strMeasure"+i]}`;
             ingredientsTab.push(singleIngredient);
         }
@@ -102,7 +102,7 @@ const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThu
                         `<span class="recipe__description">${ingredient}</span><br>`
                     ).join(" ")
                 }
-
+                </div>
             `
 
         sectionName.append(mealSectionToAdd);
@@ -139,6 +139,7 @@ const handleFavBtnClick = function(){
     })
 }
 const handleShowBtnClick = function() {
+    this.classList.toggle("btn-show-active");
     const recipeDiv = this.parentNode.nextElementSibling;
     recipeDiv.classList.toggle("recipe-active")
 }
