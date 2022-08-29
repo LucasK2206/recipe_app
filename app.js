@@ -140,7 +140,7 @@ const handleFavBtnClick = function(){
 }
 const handleShowBtnClick = function() {
     const recipeDiv = this.parentNode.nextElementSibling;
-    recipeDiv.classList.toggle("active")
+    recipeDiv.classList.toggle("recipe-active")
 }
 
 const getElementsFromLs = function() {

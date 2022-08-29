@@ -176,6 +176,7 @@ body{
     width: 100%;
     justify-content: space-around;
     &__fav{
+        font-weight: bold;
         border: none;
         outline: 2px solid $color_white;
         cursor: pointer;
@@ -183,19 +184,27 @@ body{
         background: transparent;
         color: $color_white;
         text-decoration: none;
-        transition: color .3s ease-in-out;
+        transition: color 1s;
         position: relative;
+        z-index: 1;
+        overflow: hidden;
         &:hover{
             color: #345f33;
         }
-        &:before{
+        &::before{
             height: 100%;
-            width: 0;
+            width: 150%;
             content: "";
             position: absolute;
             top: 0;
-            left: 0;
-            transform: skewX(35deg);
+            left: -20px;
+            transform: translateX(-100%) skewX(35deg) ;
+            background-color: $color_white;
+            transition: transform 1s;
+            z-index: -1;
+        }
+        &:hover::before{
+            transform: translateX(0) skewX(35deg) ;
         }
     }
     &__show{
@@ -239,6 +248,6 @@ body{
     color: #000;
     padding: 5px 0;
 }
-.active{
+.recipe-active{
     display: block;
 }
