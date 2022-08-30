@@ -8,6 +8,7 @@ const containerFav = document.querySelector(".containerFav");
 
 document.addEventListener("DOMContentLoaded", () => {
     addEventListeners();
+    getRandomMeal();
 })
 const addEventListeners = function(){
     getMagnifierIcon.addEventListener("click", handleMagnifierClick);
@@ -35,7 +36,6 @@ const getRandomMeal = async function(){
     const randomMealItem = await responseRandomMeal.meals[0];
     return randomMealItem;
 }
-getRandomMeal();
 
 const getMealByName = async function(mealName){
     searchBox.innerHTML = "";
@@ -60,18 +60,13 @@ const startAsyncFunc = async function(){
 startAsyncFunc();
 const createArticleComponent = function(sectionName, idMeal, strMeal, strMealThumb, rest){
 
-    console.log(rest)
     const mealSectionToAdd = document.createElement("article");
     mealSectionToAdd.classList.add("container__recipe");
     mealSectionToAdd.setAttribute("title",`${idMeal}`);
     if(sectionName === containerRandomRecipe || sectionName === searchSection){
         mealSectionToAdd.classList.add("indelible");
     }
-   for(let i=1; i<=20; i++){
-        if(rest["strIngredient"+i] !== ""){
-            console.log(`${rest["strIngredient"+i]} : ${rest["strMeasure"+i]}`)
-        }
-   }
+
    const ingredientsTab = [];
     for(let i=1; i<=20; i++){
         if(rest["strIngredient"+i]){
@@ -129,7 +124,6 @@ const handleFavBtnClick = function(){
             localStorage.setItem(mealTargetTitle, JSON.stringify(result));
             createArticleComponent(containerFav, idMeal, strMeal, strMealThumb, rest);
             console.log("add")
-            console.dir(this)
 
         } else if(Boolean(localStorage.getItem(mealTargetTitle)) && !mealArticle.classList.contains("indelible")){
             localStorage.removeItem(mealTargetTitle);
@@ -170,7 +164,14 @@ const addSearchListToHtml = function(idMeal, strMeal, strMealThumb, rest){
     listItemElement.value = strMeal
     listItemElement.innerHTML = `${strMeal}`;
     ulList.append(listItemElement);
-
+}
+const countItemInSearch = function() {
+    const listElements = document.querySelectorAll(".navigation__list--item");
+    if(listElements.length > 5){
+        ulList.style.overflowY = "scroll";
+    }else {
+        ulList.style.overflowY = "hidden";
+    }
 }
 
 const searchLetterWrote = function(){
@@ -186,6 +187,7 @@ const searchLetterWrote = function(){
                                 const {idMeal, strMeal, strMealThumb, ...rest} = key
                                 addSearchListToHtml(idMeal, strMeal, strMealThumb, rest);
                             }
+                            countItemInSearch()
                         }
                     },
                     (reject) => {

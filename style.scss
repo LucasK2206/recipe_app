@@ -84,6 +84,7 @@ body{
         top: 42px;
         background: #406b40;
         color: $color_white;
+        max-height: 200px;
         &--item{
             margin: 1px 0;
             padding: 5px;
@@ -97,8 +98,8 @@ body{
         }
     }
 }
-.navigation__list--item:nth-child(5) .navigation__list{
-    color: blue;
+.navigation__list:nth-child(5) .navigation__list{
+    overflow: scroll;
   }
 .navigation__list--disabled{
     display: none;
