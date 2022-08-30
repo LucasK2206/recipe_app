@@ -85,6 +85,13 @@ body{
         background: #406b40;
         color: $color_white;
         max-height: 200px;
+        &::-webkit-scrollbar{
+            width: 12px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: #588d58;
+            border: 1px solid #3d633d;
+        }
         &--item{
             margin: 1px 0;
             padding: 5px;

@@ -85,6 +85,13 @@ body {
   color: #fff;
   max-height: 200px;
 }
+.navigation__list::-webkit-scrollbar {
+  width: 12px;
+}
+.navigation__list::-webkit-scrollbar-thumb {
+  background: #588d58;
+  border: 1px solid #3d633d;
+}
 .navigation__list--item {
   margin: 1px 0;
   padding: 5px;
