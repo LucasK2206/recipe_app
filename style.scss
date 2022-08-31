@@ -105,9 +105,7 @@ body{
         }
     }
 }
-.navigation__list:nth-child(5) .navigation__list{
-    overflow: scroll;
-  }
+
 .navigation__list--disabled{
     display: none;
 }
@@ -314,6 +312,7 @@ body{
 }
 @media only screen and (min-width: 1600px) {
     .main{
+        margin-top: 100px;
         display: flex;
         flex-direction: row;
         align-items: flex-start;
@@ -348,33 +347,45 @@ body{
     .buttons__show::before, .buttons__show::after{
         width: 30.8px;
     }
+    .navigation{
+        height: 90px;
+    }
+    .navigation__search{
+        width: 60px;
+        height: 60px;
+    }
+    .navigation__search--icon{
+        width: 60px;
+        height: 60px;
+        &::before{
+            height: 18px;
+            width: 6.5px;
+            left: 36px;
+            top: 32px;
+        }
+
+        &::after{
+            height: 32px;
+            width: 32px;
+            left: 10px;
+            top: 10px;
+            border: 6px solid #588157;
+        }
+    }
+    .navigation__search--active{
+        width: 500px;
+    }
+    .navigation__search--input{
+        font-size: 3rem;
+    }
+    .navigation__list{
+        width: 500px;
+        top: 82px;
+    }
+    .navigation__list--item{
+        font-size: 1.7rem;
+    }
+    .containerSearch, .containerRand, .containerFav{
+        font-size: 2.6rem;
+    }
 }
-// .container{
-//     @include flex-display;
-//     flex-direction: column;
-//     width: 100%;
-//     &__recipe{
-//         background: $color_white;
-//         width: 270px;
-//         padding: 7px;
-//         box-shadow: 0 0 10px rgb(180, 180, 180);
-//         position: relative;
-//         &--name{
-//             font-size: 1.25rem;
-//             max-width: 256px;
-//             color: $color_white;
-//             position: absolute;
-//             padding: inherit;
-//             top: 100px;
-//             transform: translateY(-50%);
-//             padding: 5px;
-//             background:#588157;
-//             z-index: 1;
-//         }
-//         &--img, &--img img{
-//             object-fit: cover;
-//             width: 100%;
-//             height: 220px;
-//         }
-//     }
-// }
