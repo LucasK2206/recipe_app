@@ -146,7 +146,7 @@ body {
   flex-direction: column;
 }
 
-.containerSearch, .containerRand, .container__title {
+.containerSearch, .containerRand, .containerFav {
   font-size: 1.7rem;
   padding: 5px 10px;
   font-weight: bold;
@@ -185,7 +185,7 @@ body {
   -o-object-fit: cover;
      object-fit: cover;
   width: 100%;
-  height: 200px;
+  height: 220px;
 }
 
 .buttons {
@@ -217,11 +217,11 @@ body {
 }
 .buttons__fav::before {
   height: 100%;
-  width: 150%;
+  width: 220%;
   content: "";
   position: absolute;
   top: 0;
-  left: -20px;
+  left: -30px;
   transform: translateX(-100%) skewX(35deg);
   background-color: #fff;
   transition: transform 1s;
@@ -280,15 +280,12 @@ body {
   text-shadow: none;
   color: #000;
   padding: 5px 0;
-  opacity: 0;
-  transition: 1s;
 }
 
 .recipe-active {
   -webkit-animation: fade-in 1s forwards;
           animation: fade-in 1s forwards;
   display: block;
-  opacity: 1;
 }
 
 @-webkit-keyframes fade-in {
@@ -306,5 +303,79 @@ body {
   }
   100% {
     opacity: 1;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .main {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-evenly;
+  }
+  .container__recipe {
+    width: 330px;
+  }
+  .container__recipe--name {
+    max-width: 316px;
+    font-size: 1.8rem;
+    top: 180px;
+  }
+  .container__recipe--img, .container__recipe--img img {
+    height: 300px;
+  }
+  .recipe {
+    font-size: 1.4rem;
+  }
+  .buttons {
+    padding: 25px 0;
+  }
+  .buttons__fav {
+    padding: 25px;
+    font-size: 1.9rem;
+  }
+  .buttons__show {
+    width: 40px;
+    height: 40px;
+    padding: 20px;
+  }
+  .buttons__show::before, .buttons__show::after {
+    width: 24.5px;
+  }
+}
+@media only screen and (min-width: 1600px) {
+  .main {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-evenly;
+  }
+  .container__recipe {
+    width: 450px;
+  }
+  .container__recipe--name {
+    max-width: 436px;
+    font-size: 2.1rem;
+    top: 220px;
+  }
+  .container__recipe--img, .container__recipe--img img {
+    height: 400px;
+  }
+  .recipe {
+    font-size: 2.1rem;
+  }
+  .buttons {
+    padding: 30px 0;
+  }
+  .buttons__fav {
+    padding: 30px;
+    font-size: 1.9rem;
+  }
+  .buttons__show {
+    width: 50px;
+    height: 50px;
+    padding: 20px;
+  }
+  .buttons__show::before, .buttons__show::after {
+    width: 30.8px;
   }
 }/*# sourceMappingURL=style.css.map */
